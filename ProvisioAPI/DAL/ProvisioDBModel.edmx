@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PROVISIODBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerBalance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="B_AccountNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="B_AccountName" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="B_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MomoNumber" Type="varchar" MaxLength="50" />
+          <Property Name="MomoProvider" Type="varchar" MaxLength="50" />
+          <Property Name="TelephoneNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastAccessed" Type="datetime2" Precision="7" />
+          <Property Name="Notes" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="EntryID" />
+          </Key>
+          <Property Name="EntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="B_AcountNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ReferenceNumber" Type="varchar" MaxLength="50" />
+          <Property Name="TransactionType" Type="varchar" MaxLength="50" />
+          <Property Name="TransactionAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TansactionDate" Type="datetime" />
+          <Property Name="Comments" Type="varchar" MaxLength="400" />
+          <Property Name="TransactionCode" Type="varchar" MaxLength="20" />
+          <Property Name="LastUpdated" Type="datetime" />
+        </EntityType>
+        <Function Name="usp_Get_Account_By_BankAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="B_AccountNumber" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Get_Account_By_RefNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReferenceNumber" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Get_All_Accounts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReferenceNumber" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="PROVISIODBModelStoreContainer">
+          <EntitySet Name="CustomerAccount" EntityType="Self.CustomerAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PROVISIODBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustomerAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferenceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerBalance" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="B_AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="B_AccountName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="B_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MomoNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MomoProvider" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TelephoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastAccessed" Type="DateTime" Precision="7" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="PROVISIODBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerAccount" EntityType="Self.CustomerAccount" />
+          <FunctionImport Name="usp_Get_Account_By_BankAccount" ReturnType="Collection(PROVISIODBModel.usp_Get_Account_By_BankAccount_Result)">
+          <Parameter Name="B_AccountNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Get_Account_By_RefNumber" ReturnType="Collection(PROVISIODBModel.usp_Get_Account_By_RefNumber_Result)">
+          <Parameter Name="ReferenceNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Get_All_Accounts" ReturnType="Collection(PROVISIODBModel.usp_Get_All_Accounts_Result)">
+          <Parameter Name="ReferenceNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Transactions" EntityType="PROVISIODBModel.Transactions" />
+        </EntityContainer>
+        <ComplexType Name="usp_Get_Account_By_BankAccount_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ReferenceNumber" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="CustomerBalance" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="B_AccountNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="B_AccountName" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="B_Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MomoNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MomoProvider" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TelephoneNumber" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="LastAccessed" Nullable="true" />
+          <Property Type="String" Name="Notes" Nullable="true" MaxLength="350" />
+        </ComplexType>
+        <ComplexType Name="usp_Get_Account_By_RefNumber_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ReferenceNumber" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="CustomerBalance" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="B_AccountNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="B_AccountName" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="B_Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MomoNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MomoProvider" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TelephoneNumber" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="LastAccessed" Nullable="true" />
+          <Property Type="String" Name="Notes" Nullable="true" MaxLength="350" />
+        </ComplexType>
+        <ComplexType Name="usp_Get_All_Accounts_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ReferenceNumber" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="CustomerBalance" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="B_AccountNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="B_AccountName" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="B_Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MomoNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MomoProvider" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TelephoneNumber" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="LastAccessed" Nullable="true" />
+          <Property Type="String" Name="Notes" Nullable="true" MaxLength="350" />
+        </ComplexType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="EntryID" />
+          </Key>
+          <Property Name="EntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferenceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TansactionDate" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="B_AcountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PROVISIODBModelStoreContainer" CdmEntityContainer="PROVISIODBContext">
+          <EntitySetMapping Name="CustomerAccount">
+            <EntityTypeMapping TypeName="PROVISIODBModel.CustomerAccount">
+              <MappingFragment StoreEntitySet="CustomerAccount">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="CustomerBalance" ColumnName="CustomerBalance" />
+                <ScalarProperty Name="B_AccountNumber" ColumnName="B_AccountNumber" />
+                <ScalarProperty Name="B_AccountName" ColumnName="B_AccountName" />
+                <ScalarProperty Name="B_Name" ColumnName="B_Name" />
+                <ScalarProperty Name="MomoNumber" ColumnName="MomoNumber" />
+                <ScalarProperty Name="MomoProvider" ColumnName="MomoProvider" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="LastAccessed" ColumnName="LastAccessed" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_Get_Account_By_BankAccount" FunctionName="PROVISIODBModel.Store.usp_Get_Account_By_BankAccount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PROVISIODBModel.usp_Get_Account_By_BankAccount_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="CustomerBalance" ColumnName="CustomerBalance" />
+                <ScalarProperty Name="B_AccountNumber" ColumnName="B_AccountNumber" />
+                <ScalarProperty Name="B_AccountName" ColumnName="B_AccountName" />
+                <ScalarProperty Name="B_Name" ColumnName="B_Name" />
+                <ScalarProperty Name="MomoNumber" ColumnName="MomoNumber" />
+                <ScalarProperty Name="MomoProvider" ColumnName="MomoProvider" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="LastAccessed" ColumnName="LastAccessed" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Get_Account_By_RefNumber" FunctionName="PROVISIODBModel.Store.usp_Get_Account_By_RefNumber">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PROVISIODBModel.usp_Get_Account_By_RefNumber_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="CustomerBalance" ColumnName="CustomerBalance" />
+                <ScalarProperty Name="B_AccountNumber" ColumnName="B_AccountNumber" />
+                <ScalarProperty Name="B_AccountName" ColumnName="B_AccountName" />
+                <ScalarProperty Name="B_Name" ColumnName="B_Name" />
+                <ScalarProperty Name="MomoNumber" ColumnName="MomoNumber" />
+                <ScalarProperty Name="MomoProvider" ColumnName="MomoProvider" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="LastAccessed" ColumnName="LastAccessed" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Get_All_Accounts" FunctionName="PROVISIODBModel.Store.usp_Get_All_Accounts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PROVISIODBModel.usp_Get_All_Accounts_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="CustomerBalance" ColumnName="CustomerBalance" />
+                <ScalarProperty Name="B_AccountNumber" ColumnName="B_AccountNumber" />
+                <ScalarProperty Name="B_AccountName" ColumnName="B_AccountName" />
+                <ScalarProperty Name="B_Name" ColumnName="B_Name" />
+                <ScalarProperty Name="MomoNumber" ColumnName="MomoNumber" />
+                <ScalarProperty Name="MomoProvider" ColumnName="MomoProvider" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="LastAccessed" ColumnName="LastAccessed" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="PROVISIODBModel.Transactions">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="B_AcountNumber" ColumnName="B_AcountNumber" />
+                <ScalarProperty Name="TransactionCode" ColumnName="TransactionCode" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="TansactionDate" ColumnName="TansactionDate" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
