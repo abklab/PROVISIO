@@ -1,0 +1,185 @@
+﻿USE [PROVISIODB]
+GO
+/****** Object:  Table [dbo].[CustomerAccount]    Script Date: 11/4/2019 10:45:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CustomerAccount](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ReferenceNumber] [varchar](50) NOT NULL,
+	[CustomerBalance] [decimal](18, 0) NOT NULL,
+	[B_AccountNumber] [varchar](50) NOT NULL,
+	[B_AccountName] [varchar](150) NOT NULL,
+	[B_Name] [varchar](50) NOT NULL,
+	[MomoNumber] [varchar](50) NULL,
+	[MomoProvider] [varchar](50) NULL,
+	[TelephoneNumber] [varchar](50) NOT NULL,
+	[LastAccessed] [datetime2](7) NULL,
+	[Notes] [varchar](max) NULL,
+ CONSTRAINT [PK__Customer__3214EC07F5D206CC] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Transactions]    Script Date: 11/4/2019 10:45:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Transactions](
+	[EntryID] [int] IDENTITY(1,1) NOT NULL,
+	[B_AcountNumber] [varchar](50) NULL,
+	[ReferenceNumber] [varchar](50) NULL,
+	[TransactionType] [varchar](50) NULL,
+	[TransactionAmount] [decimal](18, 0) NOT NULL,
+	[TansactionDate] [datetime] NULL,
+	[Comments] [varchar](400) NULL,
+	[TransactionCode] [varchar](20) NULL,
+	[LastUpdated] [datetime] NULL,
+ CONSTRAINT [PK_Transactions] PRIMARY KEY CLUSTERED 
+(
+	[EntryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Create_Account]    Script Date: 11/4/2019 10:45:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE proc [dbo].[usp_Create_Account]
+@ReferenceNumber varchar(50),
+@CustomerBalance decimal(18,0)=0,
+@B_AccountNumber varchar(50),
+@B_AccountName varchar(50)='',
+@B_Name varchar(50)='',
+@MomoNumber varchar(50)='',
+@MomoProvider varchar(50)='',
+@TelephoneNumber varchar(50)='',
+@LastAccessed datetime, 
+@Notes  varchar(350)=''
+as
+INSERT INTO CustomerAccount
+				(ReferenceNumber, CustomerBalance, B_AccountNumber, B_AccountName, B_Name, MomoNumber, MomoProvider, TelephoneNumber, LastAccessed, Notes)
+VALUES			(@ReferenceNumber,@CustomerBalance,@B_AccountNumber,@B_AccountName,@B_Name,@MomoNumber,@MomoProvider,@TelephoneNumber,@LastAccessed, @Notes)
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Get_Account_By_BankAccount]    Script Date: 11/4/2019 10:45:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/****** Script for SelectTopNRows command from SSMS  ******/
+CREATE proc [dbo].[usp_Get_Account_By_BankAccount]
+@B_AccountNumber varchar(50)
+as
+SELECT [Id]
+      ,[ReferenceNumber]
+      ,[CustomerBalance]
+      ,[B_AccountNumber]
+      ,[B_AccountName]
+      ,[B_Name]
+      ,[MomoNumber]
+      ,[MomoProvider]
+      ,[TelephoneNumber]
+      ,[LastAccessed]
+      ,[Notes]
+  FROM [PROVISIODB].[dbo].[CustomerAccount]
+  WHERE	B_AccountNumber = @B_AccountNumber
+		
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Get_Account_By_RefNumber]    Script Date: 11/4/2019 10:45:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/****** Script for SelectTopNRows command from SSMS  ******/
+CREATE proc [dbo].[usp_Get_Account_By_RefNumber]
+@ReferenceNumber varchar(50)
+as
+SELECT  [Id]
+      ,[ReferenceNumber]
+      ,[CustomerBalance]
+      ,[B_AccountNumber]
+      ,[B_AccountName]
+      ,[B_Name]
+      ,[MomoNumber]
+      ,[MomoProvider]
+      ,[TelephoneNumber]
+      ,[LastAccessed]
+      ,[Notes]
+  FROM [PROVISIODB].[dbo].[CustomerAccount]
+  WHERE	ReferenceNumber=@ReferenceNumber
+		
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Get_All_Accounts]    Script Date: 11/4/2019 10:45:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/****** Script for SelectTopNRows command from SSMS  ******/
+CREATE proc [dbo].[usp_Get_All_Accounts]
+as
+SELECT  [Id]
+      ,[ReferenceNumber]
+      ,[CustomerBalance]
+      ,[B_AccountNumber]
+      ,[B_AccountName]
+      ,[B_Name]
+      ,[MomoNumber]
+      ,[MomoProvider]
+      ,[TelephoneNumber]
+      ,[LastAccessed]
+      ,[Notes]
+  FROM [PROVISIODB].[dbo].[CustomerAccount]
+		
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Get_By_AccountNumber]    Script Date: 11/4/2019 10:45:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/****** Script for SelectTopNRows command from SSMS  ******/
+create proc [dbo].[usp_Get_By_AccountNumber]
+@accountNumber varchar(50)
+as
+SELECT  [Id]
+      ,[ReferenceNumber]
+      ,[CustomerBalance]
+      ,[B_AccountNumber]
+      ,[B_AccountName]
+      ,[B_Name]
+      ,[MomoNumber]
+      ,[MomoProvider]
+      ,[TelephoneNumber]
+      ,[LastAccessed]
+      ,[Notes]
+  FROM [PROVISIODB].[dbo].[CustomerAccount]
+  WHERE	B_AccountNumber=@accountNumber or 
+		MomoNumber=@accountNumber
+		
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Update_AccountBalance]    Script Date: 11/4/2019 10:45:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE proc [dbo].[usp_Update_AccountBalance]
+@ReferenceNumber varchar(50),
+@CustomerBalance decimal(18,0)=0,
+@B_AccountNumber VARCHAR(50),
+@MomoNumber varchar(50),
+@Notes  varchar(350)
+as
+UPDATE  CustomerAccount
+SET		
+	B_AccountNumber=@B_AccountNumber,
+	MomoNumber=@MomoNumber,
+	CustomerBalance = @CustomerBalance,
+	LastAccessed = GETDATE(), 
+	Notes = @Notes
+WHERE	ReferenceNumber=@ReferenceNumber 
+GO

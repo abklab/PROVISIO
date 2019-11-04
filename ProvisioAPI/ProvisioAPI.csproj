@@ -141,7 +141,6 @@
     <Compile Include="Controllers\CustomerAccountDTOesController.cs" />
     <Compile Include="Controllers\CustomerAccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="DAL\Transactions.cs">
       <DependentUpon>ProvisioDBModel.tt</DependentUpon>
     </Compile>
