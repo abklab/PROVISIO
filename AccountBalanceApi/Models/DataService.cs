@@ -181,7 +181,8 @@ namespace AccountBalanceApi.Models
                 command.Parameters.AddWithValue("@Notes", account.Notes);
                 command.Parameters.AddWithValue("@LastAccessed", last_accessed);
 
-                var response = Save(command);
+                var result = Save(command);
+                var response = result == "Success" ? "S-100" : "E-500";
                 return response;
             }
         }
@@ -189,8 +190,7 @@ namespace AccountBalanceApi.Models
         public string UpdateAccount(CustomerAccount account)
         {
             using (var command = new SqlCommand())
-            {
-              
+            {              
                 command.CommandText = "[usp_Update_AccountBalance]";
 
                 command.Parameters.AddWithValue("@referenceNumber", account.ReferenceNumber);
@@ -199,7 +199,8 @@ namespace AccountBalanceApi.Models
                 command.Parameters.AddWithValue("@MomoNumber", account.MomoNumber);
                 command.Parameters.AddWithValue("@Notes", account.Notes);
 
-                var response =Save(command);
+                var result = Save(command);
+                var response = result == "Success" ? "US-100" : "EU-500";
                 return response;
             }
         }    

@@ -39,18 +39,9 @@ namespace AccountBalanceApi.Controllers
                 {
                     return StatusCode(HttpStatusCode.BadRequest);
                 }
-                //if (!string.IsNullOrWhiteSpace(account.B_AccountNumber))
-                //{
-                //    accountToUpdate = services.GetCustomerAccountsByAccountMomoNumber(account.B_AccountNumber);
-                //}
-                //else
-                //{
-                //    accountToUpdate = services.GetCustomerAccountsByAccountMomoNumber(account.B_AccountNumber);
-                //}
-
-
+               
                 var response = services.CreateTransaction(account);
-
+               
                 return Ok(response);
 
             }
