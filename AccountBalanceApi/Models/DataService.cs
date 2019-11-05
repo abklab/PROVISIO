@@ -53,7 +53,7 @@ namespace AccountBalanceApi.Models
                     if (connection.State == ConnectionState.Closed)
                         connection.Open();
                     int i = cmd.ExecuteNonQuery();
-                    msg = i > 0 ? "Success" : "Error";
+                    msg = i > 0 ? "Success" : "Fail";
 
                 }
                 return msg;
