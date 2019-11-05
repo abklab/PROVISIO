@@ -67,9 +67,10 @@ namespace AccountBalanceApi.Controllers
                 accountToUpdate = services.GetCustomerAccountsByAccountMomoNumber(account.B_AccountNumber);
             }
 
-            if (account != null)
+            if (accountToUpdate != null)
             {
-                           
+                account.ReferenceNumber = accountToUpdate.ReferenceNumber;
+                
                 var response = services.UpdateAccount(account);
 
                 return Ok(response);
